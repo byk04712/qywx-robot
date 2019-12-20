@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer')
 const { zentao } = require('./config.json')
 
 const screenshot = async (page, filename) => {
-  await page.screenshot({ path: path.resolve(__dirname, `../output/${filename}.png`), fullPage: true })
+  await page.screenshot({ path: path.resolve(__dirname, `../output/${filename}.png`) })
 }
 
 /**
@@ -87,48 +87,60 @@ const chooseConditions2or = (page, elementIds = []) => elementIds.map(async (ele
   }
 })
 
-;(async () => {
-  console.log('正在运行中，请稍后...')
-  const browser = await puppeteer.launch()
+const logRequest = interceptedRequest => {
+  console.log('page request ', interceptedRequest.url())
+}
+
+const logLoad = () => {
+  console.log('page load ')
+}
+
+const logDomcontentloaded = () => {
+  console.log('page domcontentloaded ')
+}
+
+puppeteer.launch({
+  defaultViewport: {
+    width: 1200,
+    height: 700
+  }
+}).then(async browser => {
   const page = await browser.newPage()
+  console.log('打开浏览器新页面')
+
   await page.goto(zentao.url)
   console.log(`打开地址：${zentao.url}`)
 
-  // await page.screenshot({ path: '1.png' })
+  // page.on('request', logRequest)
+  // page.on('load', logLoad)
+  // page.on('domcontentloaded', logDomcontentloaded)
 
-  // page.on('load', async () => {
-  //   const title = await page.$('title')
-  //   console.log('loaded', title.innerText)
-  // })
-  // page.on('domcontentloaded', async () => {
-  //   const title = await page.$('body')
-  //   console.log('domcontentloaded', title.innerText)
-  // })
   // 填入账号
   const account = await page.$('#account')
   await account.type(zentao.account, { delay: 300 })
   console.log(`填入账号：${zentao.account}`)
+
   // 填入密码
   const password = await page.$('input[name="password"]')
   await password.type(zentao.password, { delay: 300 })
-  console.log(`填入密码：${zentao.password}`)
+  console.log(`填入密码：${zentao.password.replace(/./g, '*')}`)
+
   // 提交登录
   const submitButton = await page.$('#submit')
   await submitButton.click()
-  console.log('点击登录')
   await delay(1000)
-  // await page.screenshot({ path: '2.png' })
+  console.log('点击登录')
+
   const testNav = await page.$('li[data-id="qa"]')
   await testNav.click()
-  console.log('登录成功，点击 “测试” 菜单栏')
   await delay(1000)
-  // await page.screenshot({ path: '3.png' })
-  // 点击选择当前项目
+  console.log('登录成功，点击 “测试” 菜单栏')
+
   const currentItem = await page.$('#currentItem')
   await currentItem.click()
   await delay(1000)
   console.log('点击进行切换当前项目')
-  // await page.screenshot({ path: '4.png' })
+
   // 当前项目切换至 “产品-报账系统2.0”
   try {
     const targetItem = await page.$('li[data-id="44"]')
@@ -143,9 +155,9 @@ const chooseConditions2or = (page, elementIds = []) => elementIds.map(async (ele
 
   // 点击自定义的查询组
   const myQuery = await page.$('#featurebar li[id^="QUERY"]')
-  await delay(1000)
   await myQuery.click()
   await delay(1000)
+  console.log('点击自定义的搜索页签查询条件')
 
   // 点击搜索 tab panel
   const bysearchTab = await page.$('#bysearchTab')
@@ -164,7 +176,7 @@ const chooseConditions2or = (page, elementIds = []) => elementIds.map(async (ele
     const submit = await page.$('#submit')
     await submit.click()
     await delay(1000)
-    console.log('查询到了bug结果啦')
+    console.log('点击搜索按钮，查询bug')
     await screenshot(page, "查询到bug结果")
   } catch (e) {
     const error = '测试菜单页__搜索__点击搜索按钮出错'
@@ -173,11 +185,32 @@ const chooseConditions2or = (page, elementIds = []) => elementIds.map(async (ele
   }
 
   // 点击报表
-  const btns = await page.$$eval('.actions .btn-group')
-  if (Array.isArray(btns)) {
-    await delay(1000)
+  const actions = await page.$('.actions')
+  const btns = await actions.$$('.btn-group')
+  if (Array.isArray(btns) && btns.length > 2) {
     await btns[2].click()
   }
   await delay(1000)
-  await screenshot(page, "点击报表按钮")
-})()
+  console.log('查询到bug，点击报表按钮')
+
+  // 勾选报表页面的“指派给统计”
+  const chartsbugsPerAssignedTo = await page.$('#chartsbugsPerAssignedTo')
+  await chartsbugsPerAssignedTo.click()
+  await delay(1000)
+  console.log('报表页面勾选“指派给统计”')
+
+  // 点击生成报表按钮
+  const submitReport = await page.$('#submit')
+  await submitReport.click()
+  await delay(2000)
+  await screenshot(page, "获取到bug报表")
+  console.log('点击“生成报表”按钮')
+
+  // 获取报表区域元素
+  const report = await page.$('.table.active-disabled')
+  await report.screenshot({ path: 'report.png', clip: { x: 300, y: 225, width: 860, height: 214 } })
+  await delay(2000)
+  console.log('完成报表获取，请查看 report.png')
+
+  process.exit(0)
+})
