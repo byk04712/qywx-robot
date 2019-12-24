@@ -1,7 +1,5 @@
 const { qyweixin, zentao } = require('./config.json')
 const axios = require('axios')
-const fs = require('fs')
-const md5 = require('md5')
 
 const BASE_URL = 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key='
 

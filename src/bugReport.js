@@ -112,8 +112,8 @@ puppeteer.launch({
   console.log(`打开地址：${zentao.url}`)
 
   // page.on('request', logRequest)
-  // page.on('load', logLoad)
-  // page.on('domcontentloaded', logDomcontentloaded)
+  page.on('load', logLoad)
+  page.on('domcontentloaded', logDomcontentloaded)
 
   // 填入账号
   const account = await page.$('#account')
@@ -131,10 +131,13 @@ puppeteer.launch({
   await delay(1000)
   console.log('点击登录')
 
-  const testNav = await page.$('li[data-id="qa"]')
-  await testNav.click()
-  await delay(1000)
-  console.log('登录成功，点击 “测试” 菜单栏')
+  // const testNav = await page.$('li[data-id="qa"]')
+  // await testNav.click()
+  // await delay(1000)
+  // console.log('登录成功，点击 “测试” 菜单栏')
+
+  await page.goto(zentao.bugPageUrl)
+  console.log('登录成功，跳转到 “测试” 页面')
 
   const currentItem = await page.$('#currentItem')
   await currentItem.click()
