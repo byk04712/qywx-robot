@@ -1,80 +1,80 @@
 const path = require('path')
+const fs = require('fs')
 const puppeteer = require('puppeteer')
 const { zentao } = require('./config.json')
 
-const sleep = timeout => new Promise(resolve => {
+const sleep = (timeout = 1000) => new Promise(resolve => {
   setTimeout(resolve, timeout)
 })
 
 const screenshot = async (page, filename) => {
-  await page.screenshot({ path: path.resolve(__dirname, `../output/${filename}.png`) })
+  const dir = '../outpupt'
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir)
+  }
+  await page.screenshot({ path: path.resolve(__dirname, `${dir}/${filename}.png`) })
 }
 
 /**
  * 填充查询条件
- * @param {Array} employees 要查询的员工(需在系统中存在的员工)
+ * @param {String} employee 要查询的员工(需在系统中存在的员工)
+ * @param {Number} order 序号
  * @returns Promise
  */
-const fillSearchConditions = (page, employees = []) => employees.map(async (employee, index) => {
-  console.log('开始选择查询条件')
-  const order = index + 1
-
-
+const fillSearchCondition = async (page, employee, order) => {
+  await sleep(300)
   const field = await page.$(`#field${order}_chosen`)
   await field.click()
-  console.log(`填入第${order}项选择条件`)
+  console.log(`\t填入第${order}项选择条件`)
 
-
+  await sleep(300)
   const chosenItem = await page.$(`#field${order}_chosen li[title="指派给"]`)
   await chosenItem.click()
-  console.log(`填入第${order}项选择条件逻辑符`)
+  console.log(`\t填入第${order}项选择条件逻辑符`)
 
 
+  await sleep(300)
   const operator = await page.$(`#operator${order}`)
   await operator.click()
-  console.log(`填入第${order}项选择条件逻辑`)
+  console.log(`\t填入第${order}项选择条件逻辑`)
 
 
+  await sleep(300)
   const chosenValue = await page.$(`#value${order}_chosen`)
   await chosenValue.click()
-  console.log(`填入第${order}项选择框点击`)
+  console.log(`\t填入第${order}项选择框点击`)
 
-
-  const value = await page.$(`#value1_chosen li[title="${employee}"]`)
+  await sleep(300)
+  const value = await page.$(`#value${order}_chosen li[title="${employee}"]`)
   await value.click()
-  console.log(`填入第${order}项选择框输入${employee.slice(2)}`)
+  console.log(`\t填入第${order}项选择框输入${employee.slice(2)}`)
+}
 
-
-  console.log('查询条件选择完毕')
-  return true
-})
 
 /**
  * 选中查询条件为或关系
- * @param {Array} elementIds 页面节点元素id
+ * @param {String} elementId 页面节点元素id
  * @returns Promise
  */
-const chooseConditions2or = (page, elementIds = []) => elementIds.map(async (eleId, index) => {
-  try {
-    await page.$eval(`#${eleId} option[value="or"]`, el => {
-      el.selected = 'selected'
-    })
-  } catch (e) {
-    const error = `第${index + 1}项查询组改为或者出错了`
-    console.log(error)
-    await screenshot(page, error)
-  }
-})
+const chooseConditions2or = async (page, elementId) => {
+  await sleep(300)
+  await page.$eval(`#${elementId} option[value="or"]`, el => {
+    el.selected = 'selected'
+  })
+  console.log(`\t元素ID为 ${elementId} 项查询组改为或者了`)
+}
 
-puppeteer.launch({
-  defaultViewport: {
-    width: 1200,
-    height: 700
-  },
-  headless: false,
-  slowMo: 250,
-  // devtools: true
-}).then(async browser => {
+const unresolvedBugReport = async () => {
+  const browser = await puppeteer.launch({
+    defaultViewport: {
+      width: 1200,
+      height: 700
+    },
+    headless: false,
+    slowMo: 250
+    // devtools: true
+  })
+
   const page = await browser.newPage()
   console.log('打开浏览器新页面')
 
@@ -140,55 +140,85 @@ puppeteer.launch({
   // await myQuery.click()
   // console.log('点击自定义的搜索页签查询条件')
   // 点击搜索 tab panel
-  // const bysearchTab = await page.$('#bysearchTab')
-  // await bysearchTab.click()
-  // console.log('点击搜索页签')
-
-
+  await sleep(1000)
+  const bysearchTab = await page.$('#bysearchTab')
+  await bysearchTab.click()
+  console.log('点击搜索页签')
+  // 点击展开更多
+  await sleep(1000)
+  const searchmore = await page.$('#searchmore')
+  await searchmore.click()
+  console.log('点击展开更多')
   // 填入要搜索的信息
-  const results = await Promise.all(fillSearchConditions(page, zentao.employees))
-  console.log('结果', results)
+  console.log('开始选择查询条件')
+  const { employees } = zentao
+  for (let i = 0, len = employees.length; i < len; i++) {
+    await fillSearchCondition(page, employees[i], i + 1)
+  }
+  console.log('查询条件选择完毕')
+  // 查询条件改为或者关系
+  const eleIds = ['andOr2', 'andOr3', 'groupAndOr', 'andOr5', 'andOr6']
+  console.log('开始选择查询条件与或关系')
+  for (let i = 0, len = eleIds.length; i < len; i++) {
+    await chooseConditions2or(page, eleIds[i])
+  }
+  console.log('查询条件均已改为或关系')
+
+  // 点击搜索
+  const submit = await page.$('#submit')
+  await submit.click()
+  console.log('点击搜索按钮，查询bug')
+  await screenshot(page, 'result')
 
 
-  // 条件改为或者
-  // await Promise.all(chooseConditions2or(page, ['andOr2', 'andOr3', 'groupAndOr', 'andOr5', 'andOr6']))
+  // 点击报表
+  await sleep(1000)
+  const actions = await page.$('#featurebar .actions')
+  const btns = await actions.$$('.btn-group')
+  if (Array.isArray(btns) && btns.length > 2) {
+    await btns[2].click()
+  }
+  console.log('查询到bug，点击报表按钮')
 
 
-  // // 点击搜索
-  // const submit = await page.$('#submit')
-  // await submit.click()
-  // console.log('点击搜索按钮，查询bug')
-  // await screenshot(page, "查询到bug结果")
+  // 勾选报表页面的“指派给统计”
+  await sleep(1000)
+  const chartsbugsPerAssignedTo = await page.$('#chartsbugsPerAssignedTo')
+  await chartsbugsPerAssignedTo.click()
+  console.log('报表页面勾选“指派给统计”')
 
 
-  // // 点击报表
-  // const actions = await page.$('.actions')
-  // const btns = await actions.$$('.btn-group')
-  // if (Array.isArray(btns) && btns.length > 2) {
-  //   await btns[2].click()
-  // }
-  // console.log('查询到bug，点击报表按钮')
+  // 点击生成报表按钮
+  await sleep(1000)
+  const submitReport = await page.$('#submit')
+  await submitReport.click()
+  await sleep(1000)
+  await screenshot(page, '获取到bug报表')
+  console.log('点击“生成报表”按钮')
 
 
-  // // 勾选报表页面的“指派给统计”
-  // const chartsbugsPerAssignedTo = await page.$('#chartsbugsPerAssignedTo')
-  // await chartsbugsPerAssignedTo.click()
-  // console.log('报表页面勾选“指派给统计”')
+  // 获取报表区域元素
+  const report = await page.$('.table.active-disabled')
+  const filepath = path.resolve(__dirname, './report.png')
+  await report.screenshot({
+    path: 'report.png',
+    clip: {
+      x: 300,
+      y: 225,
+      width: 860,
+      height: 214
+    }
+  })
+  console.log(`完成报表获取，请查看 ${filepath}`)
+  await sleep(2000)
 
+  setTimeout(() => {
+    process.exit(0)
+  }, 3000)
 
-  // // 点击生成报表按钮
-  // const submitReport = await page.$('#submit')
-  // await submitReport.click()
-  // await delay(2000)
-  // await screenshot(page, "获取到bug报表")
-  // console.log('点击“生成报表”按钮')
+  return fs.readFileSync(filepath)
+}
 
-
-  // // 获取报表区域元素
-  // const report = await page.$('.table.active-disabled')
-  // await report.screenshot({ path: 'report.png', clip: { x: 300, y: 225, width: 860, height: 214 } })
-  // await delay(2000)
-  // console.log('完成报表获取，请查看 report.png')
-
-  // process.exit(0)
-})
+module.exports = {
+  unresolvedBugReport
+}
