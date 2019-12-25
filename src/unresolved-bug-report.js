@@ -16,53 +16,36 @@ const screenshot = async (page, filename) => {
  * @returns Promise
  */
 const fillSearchConditions = (page, employees = []) => employees.map(async (employee, index) => {
+  console.log('开始选择查询条件')
   const order = index + 1
-  try {
-    const field = await page.$(`#field${order}_chosen`)
-    await field.click()
-  } catch (e) {
-    const error = `第${order}项选择条件出错了`
-    console.log(error, e)
-    await screenshot(page, error)
-    return false
-  }
-  try {
-    const chosenItem = await page.$(`#field${order}_chosen li[title="指派给"]`)
-    await chosenItem.click()
-  } catch (e) {
-    const error = `第${order}项选择条件逻辑符出错了`
-    console.log(error)
-    await screenshot(page, error)
-    return false
-  }
-  try {
-    const operator = await page.$(`#operator${order}`)
-    await operator.click()
-  } catch (e) {
-    const error = `第${order}项选择条件逻辑符点击`
-    console.log(error)
-    await screenshot(page, error)
-    return false
-  }
-  try {
-    const chosenValue = await page.$(`#value${order}_chosen`)
-    await chosenValue.click()
-  } catch (e) {
-    const error = `第${order}项选择框点击出错了`
-    console.log(error)
-    await screenshot(page, error)
-    return false
-  }
-  try {
-    const value = await page.$(`#value1_chosen li[title="${employee}"]`)
-    await value.click()
-  } catch (e) {
-    const error = `第${order}项选择框输入${employee.slice(2)}出错了`
-    console.log(error)
-    await screenshot(page, error)
-    return false
-  }
 
+
+  const field = await page.$(`#field${order}_chosen`)
+  await field.click()
+  console.log(`填入第${order}项选择条件`)
+
+
+  const chosenItem = await page.$(`#field${order}_chosen li[title="指派给"]`)
+  await chosenItem.click()
+  console.log(`填入第${order}项选择条件逻辑符`)
+
+
+  const operator = await page.$(`#operator${order}`)
+  await operator.click()
+  console.log(`填入第${order}项选择条件逻辑`)
+
+
+  const chosenValue = await page.$(`#value${order}_chosen`)
+  await chosenValue.click()
+  console.log(`填入第${order}项选择框点击`)
+
+
+  const value = await page.$(`#value1_chosen li[title="${employee}"]`)
+  await value.click()
+  console.log(`填入第${order}项选择框输入${employee.slice(2)}`)
+
+
+  console.log('查询条件选择完毕')
   return true
 })
 
@@ -89,7 +72,8 @@ puppeteer.launch({
     height: 700
   },
   headless: false,
-  slowMo: 250
+  slowMo: 250,
+  // devtools: true
 }).then(async browser => {
   const page = await browser.newPage()
   console.log('打开浏览器新页面')
