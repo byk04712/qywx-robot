@@ -10,6 +10,7 @@ const delay = (timeout = 1000) => new Promise(resolve => {
   setTimeout(resolve, timeout)
 })
 
+
 puppeteer.launch({
   defaultViewport: {
     width: 1200,
@@ -40,10 +41,13 @@ puppeteer.launch({
   await delay(500)
   console.log('点击登录')
 
-  const testNav = await page.$('li[data-id="qa"]')
-  await testNav.click()
+  // const testNav = await page.$('li[data-id="qa"]')
+  // await testNav.click()
+  // await delay(1000)
+  // console.log('登录成功，点击 “测试” 菜单栏')
+  await page.goto('http://113.108.117.211:19979/zentao/bug-browse.html')
   await delay(1000)
-  console.log('登录成功，点击 “测试” 菜单栏')
+  console.log('登录成功，跳转 “测试” 页面')
 
   const currentItem = await page.$('#currentItem')
   await currentItem.click()
@@ -54,4 +58,32 @@ puppeteer.launch({
   await targetItem.click()
   await delay(1000)
   console.log('切换当前项目为： 产品-报账系统2.0')
+
+  const unresolvedTab = await page.$('#unresolvedTab')
+  await unresolvedTab.click()
+  await delay(1000)
+  console.log('点击 “未解决” 栏目')
+
+  const recPerPage = await page.$('#_recPerPage')
+  await recPerPage.click()
+  await delay(1000)
+  console.log('点击右下角切换每页显示数据量')
+
+  const thousand2 = await page.$('.dropdown.dropup.open ul li:last-child')
+  await thousand2.click()
+  await delay(2000)
+  console.log('点击切换每页显示2000条数据')
+
+  const datatableBugList = await page.$$eval('#datatable-bugList', el => {
+    const trs = el.querySelectorAll('.datatable-rows .flexarea table tbody tr')
+    console.log('trs ', trs)
+    return trs
+  })
+
+  console.log('datatableBugList ', datatableBugList)
+
+  await page.screenshot({ path: 'a.png' })
+
+  await delay(1000)
+  process.exit(0)
 })
