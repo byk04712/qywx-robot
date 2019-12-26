@@ -1,7 +1,7 @@
 const path = require('path')
 const fs = require('fs')
 const puppeteer = require('puppeteer')
-const { zentao } = require('./config.json')
+const { zentao, qyweixin } = require('./config.json')
 
 const sleep = (timeout = 1000) => new Promise(resolve => {
   setTimeout(resolve, timeout)
@@ -151,7 +151,7 @@ const unresolvedBugReport = async () => {
   console.log('点击展开更多')
   // 填入要搜索的信息
   console.log('开始选择查询条件')
-  const { employees } = zentao
+  const { employees } = qyweixin
   for (let i = 0, len = employees.length; i < len; i++) {
     await fillSearchCondition(page, employees[i], i + 1)
   }

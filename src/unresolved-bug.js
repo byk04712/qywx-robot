@@ -1,18 +1,19 @@
 const puppeteer = require('puppeteer')
-const { zentao } = require('./config.json')
+const { zentao, qyweixin } = require('./config.json')
 
 const sleep = (timeout = 500) => new Promise(resolve => {
   setTimeout(resolve, timeout)
 })
 
-puppeteer.launch({
-  defaultViewport: {
-    width: 1200,
-    height: 700
-  },
-  headless: true,
-  slowMo: 20
-}).then(async brower => {
+const unresolvedBug = async () => {
+  const brower = await puppeteer.launch({
+    defaultViewport: {
+      width: 1200,
+      height: 700
+    },
+    headless: true,
+    slowMo: 20
+  })
   const page = await brower.newPage()
   console.log('打开浏览器新页面')
 
@@ -45,7 +46,7 @@ puppeteer.launch({
   await currentItem.click()
   console.log('点击进行切换当前项目')
 
-  await sleep()
+  await sleep(1000)
   const targetItem = await page.$('#defaultMenu li[data-id="44"]')
   await targetItem.click()
   console.log('切换当前项目为： 产品-报账系统2.0')
@@ -66,9 +67,37 @@ puppeteer.launch({
   console.log('点击切换每页显示2000条数据')
 
   await sleep(1000)
+  // 获取内容区域
   const datatableBugList = await page.$('#datatable-bugList .flexarea tbody')
+  await sleep()
+  // 获取所有被指派的人
+  const tdTextArray = await datatableBugList.$$eval('td[data-index="7"]', tds => tds.map(td => td.innerText))
+  console.log('获取到数据', tdTextArray)
 
-  console.log('datatableBugList ', datatableBugList)
-  await page.screenshot({ path: 'a.png' })
-  process.exit(0)
-})
+  setTimeout(() => {
+    process.exit(0)
+  }, 3000)
+
+  // 处理数据
+  return handleData(tdTextArray)
+}
+
+function handleData (arr = []) {
+  console.log('before ', arr.length)
+  // 获取到统计的用户
+  var obj = arr
+    .filter(e => qyweixin.rdEmployees.includes(e))
+    .reduce((acc, item) => {
+      if (acc[item]) {
+        acc[item]++
+      } else {
+        acc[item] = 1
+      }
+      return acc
+    }, {})
+  return Object.entries(obj).map(item => ({ name: item[0], count: item[1] })).sort((a, b) => b.count - a.count)
+}
+
+module.exports = {
+  unresolvedBug
+}

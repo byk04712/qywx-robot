@@ -59,7 +59,7 @@ const markdownMsg = {
 
 const sendMsg = data =>
 	axios({
-		url: BASE_URL + qyweixin.robotKey,
+		url: BASE_URL + qyweixin.robotKeyTest,
 		method: 'POST',
 		data
 	})
