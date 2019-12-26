@@ -1,13 +1,17 @@
 const puppeteer = require('puppeteer')
 const { zentao } = require('./config.json')
 
+const sleep = (timeout = 500) => new Promise(resolve => {
+  setTimeout(resolve, timeout)
+})
+
 puppeteer.launch({
   defaultViewport: {
     width: 1200,
     height: 700
   },
-  headless: false,
-  slowMo: 200
+  headless: true,
+  slowMo: 20
 }).then(async brower => {
   const page = await brower.newPage()
   console.log('打开浏览器新页面')
@@ -30,23 +34,28 @@ puppeteer.launch({
   await submitButton.click()
   console.log('点击登录')
 
+  await sleep()
   // const testNav = await page.$('li[data-id="qa"]')
   // await testNav.click()
   // console.log('登录成功，点击 “测试” 菜单栏')
-  await page.goto('http://113.108.117.211:19979/zentao/bug-browse.html')
+  await page.goto(zentao.bugPageUrl)
   console.log('登录成功，跳转 “测试” 页面')
 
   const currentItem = await page.$('#currentItem')
   await currentItem.click()
   console.log('点击进行切换当前项目')
 
+  await sleep()
   const targetItem = await page.$('#defaultMenu li[data-id="44"]')
   await targetItem.click()
   console.log('切换当前项目为： 产品-报账系统2.0')
 
-  const unresolvedTab = await page.$('#unresolvedTab')
-  await unresolvedTab.click()
-  console.log('点击 “未解决” 栏目')
+  await sleep()
+  // const unresolvedTab = await page.$('#unresolvedTab')
+  // await unresolvedTab.click()
+  // console.log('点击 “未解决” 栏目')
+  await page.goto(zentao.unresolvedTabPageUrl)
+  console.log('跳转到“未解决” 栏目')
 
   const recPerPage = await page.$('#_recPerPage')
   await recPerPage.click()
@@ -56,12 +65,8 @@ puppeteer.launch({
   await thousand2.click()
   console.log('点击切换每页显示2000条数据')
 
-  const datatableBugList = await page.$eval('#datatable-bugList', el => {
-    // const trs = el.querySelectorAll('.datatable-rows .flexarea table tbody tr')
-    console.log('trs ', el.querySelector)
-    // return trs
-    return {}
-  })
+  await sleep(1000)
+  const datatableBugList = await page.$('#datatable-bugList .flexarea tbody')
 
   console.log('datatableBugList ', datatableBugList)
   await page.screenshot({ path: 'a.png' })

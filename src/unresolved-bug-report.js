@@ -8,7 +8,7 @@ const sleep = (timeout = 1000) => new Promise(resolve => {
 })
 
 const screenshot = async (page, filename) => {
-  const dir = '../outpupt'
+  const dir = '../output'
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir)
   }
