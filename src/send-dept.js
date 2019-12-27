@@ -12,7 +12,7 @@ async function main () {
   const msg = {
     msgtype: 'markdown',
     markdown: {
-      content: `当前还有未解决的BUG共计 <font color="warning">${total}</font> 个 ，请以下同学及时[处理](http://113.108.117.211:19979/zentao/my-bug.html)。
+      content: `当前 [产品-报账系统2.0](http://113.108.117.211:19979/zentao/bug-browse-44-0-unresolved-0.html) 还有未解决的BUG共计 <font color="warning">${total}</font> 个 ，请以下同学及时[处理](http://113.108.117.211:19979/zentao/my-bug.html)。
       ${content}
       `
     }

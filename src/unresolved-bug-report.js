@@ -3,7 +3,7 @@ const fs = require('fs')
 const puppeteer = require('puppeteer')
 const { zentao, qyweixin } = require('./config.json')
 
-const sleep = (timeout = 1000) => new Promise(resolve => {
+const sleep = (timeout = 500) => new Promise(resolve => {
   setTimeout(resolve, timeout)
 })
 
