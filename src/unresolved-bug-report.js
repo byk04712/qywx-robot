@@ -212,9 +212,9 @@ const unresolvedBugReport = async () => {
   console.log(`完成报表获取，请查看 ${filepath}`)
   await sleep(2000)
 
-  setTimeout(() => {
-    process.exit(0)
-  }, 3000)
+  // setTimeout(() => {
+  //   process.exit(0)
+  // }, 3000)
 
   return fs.readFileSync(filepath)
 }

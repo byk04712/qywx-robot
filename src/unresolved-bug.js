@@ -74,9 +74,9 @@ const unresolvedBug = async () => {
   const tdTextArray = await datatableBugList.$$eval('td[data-index="7"]', tds => tds.map(td => td.innerText))
   console.log('获取到数据', tdTextArray)
 
-  setTimeout(() => {
-    process.exit(0)
-  }, 3000)
+  // setTimeout(() => {
+  //   process.exit(0)
+  // }, 3000)
 
   // 处理数据
   return handleData(tdTextArray)
