@@ -17,4 +17,8 @@ async function main () {
 	console.log('发送结果', res.data)
 }
 
-main()
+// main()
+
+module.exports = {
+  main
+}
