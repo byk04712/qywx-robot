@@ -73,7 +73,7 @@ const unresolvedBugReport = async () => {
       width: 1200,
       height: 700
     },
-    headless: false,
+    headless: true,
     slowMo: 250
     // devtools: true
   })
