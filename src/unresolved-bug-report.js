@@ -139,40 +139,40 @@ const unresolvedBugReport = async () => {
 
 
   // 点击自定义的查询组
-  await sleep(1000)
-  const myQuery = await page.$('#featurebar li[id^="QUERY"]')
-  await myQuery.click()
-  console.log('点击自定义的搜索页签查询条件')
+  // await sleep(1000)
+  // const myQuery = await page.$('#featurebar li[id^="QUERY"]')
+  // await myQuery.click()
+  // console.log('点击自定义的搜索页签查询条件')
   // 点击搜索 tab panel
   await sleep(1000)
-  // const bysearchTab = await page.$('#bysearchTab')
-  // await bysearchTab.click()
-  // console.log('点击搜索页签')
-  // // 点击展开更多
-  // await sleep(1000)
-  // const searchmore = await page.$('#searchmore')
-  // await searchmore.click()
-  // console.log('点击展开更多')
-  // // 填入要搜索的信息
-  // console.log('开始选择查询条件')
-  // const { employees } = qyweixin
-  // for (let i = 0, len = employees.length; i < len; i++) {
-  //   await fillSearchCondition(page, employees[i], i + 1)
-  // }
-  // console.log('查询条件选择完毕')
-  // // 查询条件改为或者关系
-  // const eleIds = ['andOr2', 'andOr3', 'groupAndOr', 'andOr5', 'andOr6']
-  // console.log('开始选择查询条件与或关系')
-  // for (let i = 0, len = eleIds.length; i < len; i++) {
-  //   await chooseConditions2or(page, eleIds[i])
-  // }
-  // console.log('查询条件均已改为或关系')
+  const bysearchTab = await page.$('#bysearchTab')
+  await bysearchTab.click()
+  console.log('点击搜索页签')
+  // 点击展开更多
+  await sleep(1000)
+  const searchmore = await page.$('#searchmore')
+  await searchmore.click()
+  console.log('点击展开更多')
+  // 填入要搜索的信息
+  console.log('开始选择查询条件')
+  const { employees } = qyweixin
+  for (let i = 0, len = employees.length; i < len; i++) {
+    await fillSearchCondition(page, employees[i], i + 1)
+  }
+  console.log('查询条件选择完毕')
+  // 查询条件改为或者关系
+  const eleIds = ['andOr2', 'andOr3', 'groupAndOr', 'andOr5', 'andOr6']
+  console.log('开始选择查询条件与或关系')
+  for (let i = 0, len = eleIds.length; i < len; i++) {
+    await chooseConditions2or(page, eleIds[i])
+  }
+  console.log('查询条件均已改为或关系')
 
   // 点击搜索
-  // const submit = await page.$('#submit')
-  // await submit.click()
-  // console.log('点击搜索按钮，查询bug')
-  // await screenshot(page, 'result')
+  const submit = await page.$('#submit')
+  await submit.click()
+  console.log('点击搜索按钮，查询bug')
+  await screenshot(page, 'result')
 
 
   // 点击报表
