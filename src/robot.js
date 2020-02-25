@@ -1,3 +1,11 @@
+/*
+ * @Author: Do not edit
+ * @Date: 2020-02-25 13:59:18
+ * @LastEditTime: 2020-02-25 17:51:28
+ * @LastEditors: 秦真
+ * @Description: 
+ * @FilePath: \qywx-robot\src\robot.js
+ */
 const axios = require('axios')
 const fs = require('fs')
 const md5 = require('md5')
@@ -59,7 +67,7 @@ const markdownMsg = {
 
 const sendMsg = data =>
 	axios({
-		url: BASE_URL + qyweixin.robotKey,
+		url: BASE_URL + qyweixin.robotKeyProduct,
 		method: 'POST',
 		data
 	})

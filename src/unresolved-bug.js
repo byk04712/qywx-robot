@@ -66,9 +66,10 @@ const unresolvedBug = async () => {
   await thousand2.click()
   console.log('点击切换每页显示2000条数据')
 
-  await sleep(1000)
+  await sleep(2000)
   // 获取内容区域
   const datatableBugList = await page.$('#datatable-bugList .flexarea tbody')
+  await sleep(1000)
   await sleep()
   // 获取所有被指派的人
   const tdTextArray = await datatableBugList.$$eval('td[data-index="7"]', tds => tds.map(td => td.innerText))
