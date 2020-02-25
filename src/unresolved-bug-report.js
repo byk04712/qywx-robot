@@ -8,11 +8,14 @@ const sleep = (timeout = 500) => new Promise(resolve => {
 })
 
 const screenshot = async (page, filename) => {
-  const dir = '../output'
+  const dir = './output'
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir)
+    console.log(`不存在目录${dir}，新创建`)
   }
-  await page.screenshot({ path: path.resolve(__dirname, `${dir}/${filename}.png`) })
+  const filepath = `${dir}/${filename}.png`
+  console.log('文件存放路径', filepath)
+  await page.screenshot({ path: filepath })
 }
 
 /**
@@ -70,7 +73,7 @@ const unresolvedBugReport = async () => {
       width: 1200,
       height: 700
     },
-    headless: false,
+    headless: true,
     slowMo: 250
     // devtools: true
   })
@@ -81,6 +84,7 @@ const unresolvedBugReport = async () => {
 
   await page.goto(zentao.url)
   console.log(`打开地址：${zentao.url}`)
+  await screenshot(page, 'result')
 
 
   page.on('request', interceptedRequest => {
@@ -199,7 +203,7 @@ const unresolvedBugReport = async () => {
 
   // 获取报表区域元素
   const report = await page.$('.table.active-disabled')
-  const filepath = path.resolve(__dirname, './report.png')
+  const filepath = path.resolve(__dirname, '../report.png')
   await report.screenshot({
     path: 'report.png',
     clip: {
