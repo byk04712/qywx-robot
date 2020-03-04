@@ -11,8 +11,10 @@ const unresolvedBug = async () => {
       width: 1200,
       height: 700
     },
-    headless: true,
-    slowMo: 20
+    // devtools: true, // 是否是否为每个选项卡自动打开 DevTools 面板，如果这个选项是 true 的话, headless 选项将被设置为 false
+    headless: true, // 是否打开无头模式
+    slowMo: 20,
+    dumpio: true, // 是否将浏览器进程标准输出和标准错误输入到 process.stdout 和 process.stderr 中
   })
   const page = await brower.newPage()
   console.log('打开浏览器新页面')
@@ -75,9 +77,8 @@ const unresolvedBug = async () => {
   const tdTextArray = await datatableBugList.$$eval('td[data-index="7"]', tds => tds.map(td => td.innerText))
   console.log('获取到数据', tdTextArray)
 
-  // setTimeout(() => {
-  //   process.exit(0)
-  // }, 3000)
+  // 关闭浏览器
+  await brower.close();
 
   // 处理数据
   return handleData(tdTextArray)

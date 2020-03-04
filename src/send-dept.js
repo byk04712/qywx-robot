@@ -1,4 +1,11 @@
-
+/*
+ * @Author: Do not edit
+ * @Date: 2019-12-30 08:31:45
+ * @LastEditTime: 2020-02-28 16:39:47
+ * @LastEditors: 秦真
+ * @Description: 发送消息统计到部门群
+ * @FilePath: \qywx-robot\src\send-dept.js
+ */
 const { sendMsg } = require('./robot')
 const { unresolvedBug } = require('./unresolved-bug')
 

@@ -73,9 +73,10 @@ const unresolvedBugReport = async () => {
       width: 1200,
       height: 700
     },
-    headless: true,
-    slowMo: 250
-    // devtools: true
+    // devtools: true, // 是否是否为每个选项卡自动打开 DevTools 面板，如果这个选项是 true 的话, headless 选项将被设置为 false
+    headless: true, // 是否打开无头模式
+    slowMo: 20,
+    dumpio: true, // 是否将浏览器进程标准输出和标准错误输入到 process.stdout 和 process.stderr 中
   })
 
   const page = await browser.newPage()
@@ -216,9 +217,8 @@ const unresolvedBugReport = async () => {
   console.log(`完成报表获取，请查看 ${filepath}`)
   await sleep(2000)
 
-  // setTimeout(() => {
-  //   process.exit(0)
-  // }, 3000)
+  // 关闭浏览器
+  await brower.close();
 
   return fs.readFileSync(filepath)
 }

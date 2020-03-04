@@ -1,4 +1,6 @@
-
+/**
+ * 发送消息到前端团队
+ */
 const md5 = require('md5')
 const { sendMsg } = require('./robot')
 const { unresolvedBugReport } = require('./unresolved-bug-report')
