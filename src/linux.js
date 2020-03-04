@@ -1,7 +1,7 @@
 /*
  * @Author: Do not edit
  * @Date: 2020-03-02 10:07:36
- * @LastEditTime: 2020-03-04 09:47:07
+ * @LastEditTime: 2020-03-04 11:44:24
  * @LastEditors: 秦真
  * @Description: 运行在 Linux 服务器端，需要在linux上安装 Google-Chrome 浏览器，同时指定可执行路径
  * @FilePath: \qywx-robot\src\linux.js
@@ -132,8 +132,8 @@ const main = async() => {
   async function doSend() {
     const bugs = countBugs(fetchedData);
     const total = bugs.reduce((acc, item) => (acc += item.count), 0)
-    const content = bugs.map(bug => {
-      return `\n>${bug.name} \t\t **${bug.count}**个 `
+    const content = bugs.map(({ name, count }) => {
+      return `\n>${name.padEnd(14 - name.length * 2)}${' '.repeat((3 - String(count).length) * 2)}**${count}**个`;
     }).join('')
     const msg = {
       msgtype: 'markdown',
@@ -147,6 +147,7 @@ const main = async() => {
     console.log('发送结果', res.data)
   }
 
+  await doSend();
 };
 
 console.log('正在运行定时任务中...')
