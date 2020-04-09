@@ -1,7 +1,7 @@
 /*
  * @Author: Do not edit
  * @Date: 2020-03-02 10:07:36
- * @LastEditTime: 2020-03-04 11:44:24
+ * @LastEditTime: 2020-04-07 17:34:24
  * @LastEditors: 秦真
  * @Description: 运行在 Linux 服务器端，需要在linux上安装 Google-Chrome 浏览器，同时指定可执行路径
  * @FilePath: \qywx-robot\src\linux.js
@@ -154,8 +154,8 @@ console.log('正在运行定时任务中...')
 
 const rule = new schedule.RecurrenceRule();
 rule.dayOfWeek = [0, new schedule.Range(1, 5)];
-rule.hour = [9, 18];
-rule.minute = 0;
+rule.hour = [8, 12, 17];
+rule.minute = 30;
 schedule.scheduleJob(rule, function() {
   const t = new Date()
   console.log('定时运行运行', t.toLocaleDateString() + ' ' + t.toLocaleTimeString());

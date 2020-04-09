@@ -1,7 +1,7 @@
 /*
  * @Author: Do not edit
  * @Date: 2019-12-30 08:31:45
- * @LastEditTime: 2020-02-28 16:39:47
+ * @LastEditTime: 2020-04-09 09:47:36
  * @LastEditors: 秦真
  * @Description: 发送消息统计到部门群
  * @FilePath: \qywx-robot\src\send-dept.js
@@ -13,8 +13,8 @@ async function main () {
   const bugs = await unresolvedBug()
   console.log('当前bug情况', bugs)
   const total = bugs.reduce((acc, item) => (acc += item.count), 0)
-  const content = bugs.map(bug => {
-    return `\n>${bug.name} \t\t **${bug.count}**个 `
+  const content = bugs.map(({ name, count }) => {
+    return `\n>${name.padEnd(14 - name.length * 2)}${' '.repeat((3 - String(count).length) * 2)}**${count}**个`;
   }).join('')
   const msg = {
     msgtype: 'markdown',
