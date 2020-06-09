@@ -1,8 +1,7 @@
 /*
  * @Author: Do not edit
  * @Date: 2020-06-09 14:04:15
- * @LastEditors: 秦真
- * @LastEditTime: 2020-06-09 14:18:58
+ * @LastEditTime: 2020-06-09 19:05:45
  * @Description: 
  * 使用nodejs把当前电脑文件夹目录当作web服务器来访问
  * - 如果是文件，则显示文件内容
