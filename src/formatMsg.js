@@ -1,7 +1,7 @@
 /*
  * @Author: Do not edit
  * @Date: 2020-05-19 10:47:22
- * @LastEditTime: 2020-06-09 18:38:44
+ * @LastEditTime: 2020-06-15 14:35:46
  * @LastEditors: 秦真
  * @Description: 格式话展示消息内容
  * @FilePath: \qywx-robot\src\formatMsg.js
@@ -131,10 +131,11 @@ function formatMarkdown(source) {
 
 /**
  * 生成静态页面
- * @param {*} date 
- * @param {*} source 
+ * @param {String} dirName 文件夹名称
+ * @param {String|Array} date 日期
+ * @param {Object} source 数据源
  */
-async function writeBugReport(date, source) {
+async function writeBugReport(dirName, date, source) {
   if (date instanceof Date) {
     date = dateFormat(date);
   }
@@ -206,7 +207,11 @@ async function writeBugReport(date, source) {
   </body>
 </html>
   `;
-  const filepath = path.resolve(__dirname, `../output/report/${date}.html`);
+  const dir = path.resolve(__dirname, `../output/report/${dirName}`);
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+  }  
+  const filepath = path.resolve(__dirname, `../output/report/${dirName}/${date}.html`);
   return new Promise((resolve, reject) => {
     fs.writeFile(
       filepath,

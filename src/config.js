@@ -1,7 +1,7 @@
 /*
  * @Author: Do not edit
  * @Date: 2020-05-18 17:00:57
- * @LastEditTime: 2020-06-09 10:42:21
+ * @LastEditTime: 2020-06-15 13:48:12
  * @LastEditors: 秦真
  * @Description: 禅道配置
  * @FilePath: \qywx-robot\src\config.js
@@ -22,6 +22,8 @@ module.exports = {
   bugUrlGXB2: `${baseUrl}project-bug-79.html`,
   // 中兴新云，GXB项目-二期430版本
   bugUrlGXB3: `${baseUrl}project-bug-119.html`,
+  // 中兴新云，砺剑行动
+  bugUrlLJXD: `${baseUrl}project-bug-120.html`,
   // 中兴新云，产品报账系统2.0-6.30版本（商城）
   bugUrl630: `${baseUrl}project-bug-121.html`,
   // 中兴新云，申能项目

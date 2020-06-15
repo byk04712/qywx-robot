@@ -1,12 +1,13 @@
 /*
  * @Author: Do not edit
  * @Date: 2020-05-22 10:45:45
- * @LastEditTime: 2020-06-08 18:13:50
+ * @LastEditTime: 2020-06-15 14:36:02
  * @LastEditors: 秦真
  * @Description: 
- * @FilePath: \EggVueSSR\app\robot\index.test.js
+ * @FilePath: \qywx-robot\src\index.test.js
  */
 const md5 = require('md5');
+const fs = require('fs');
 const {
   robotKeyForTeam,
   robotKeyForTeam2,
@@ -29,6 +30,7 @@ const cronParser = require('cron-parser');
 
 const date = new Date();
 
+const dir = path.
 
 try {
   var interval = cronParser.parseExpression('0 30 8,12,17 * * *');

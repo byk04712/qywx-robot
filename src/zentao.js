@@ -1,7 +1,7 @@
 /*
  * @Author: Do not edit
  * @Date: 2020-05-22 10:45:24
- * @LastEditTime: 2020-06-09 14:49:47
+ * @LastEditTime: 2020-06-15 14:42:53
  * @LastEditors: 秦真
  * @Description: 
  * @FilePath: \qywx-robot\src\zentao.js
@@ -9,6 +9,7 @@
 const puppeteer = require('puppeteer');
 const path = require('path');
 const os = require('os');
+const fs = require('fs');
 const {
   loginUrl,
   username,
@@ -303,7 +304,7 @@ module.exports = (() => {
   /**
    * 抓取数据截图
    */
-  async function screenshotTesterReport(date) {
+  async function screenshotTesterReport(dirName, date) {
     if (!browser) {
       browser = await launchBrowser();
     }
@@ -313,13 +314,17 @@ module.exports = (() => {
       date = dateFormat(date);
     }
     const page = await browser.newPage();
-    await doGoto(page, `http://127.0.0.1:3000/output/report/${date}.html`);
+    await doGoto(page, `http://127.0.0.1:3000/output/report/${dirName}/${date}.html`);
     await delay(1000);
     const table = await page.$('.report');
     if (!table) {
       throw new Error('访问生成的报表页面失败！');
     }
-    const filepath = path.resolve(__dirname, `../output/images/${date}.png`);
+    const dir = path.resolve(__dirname, `../output/images/${dirName}`);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir);
+    }  
+    const filepath = path.resolve(__dirname, `../output/images/${dirName}/${date}.png`);
     const imageBase64 = await table.screenshot({
       path: filepath,
       encoding: 'binary'
