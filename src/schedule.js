@@ -1,7 +1,7 @@
 /*
  * @Author: Do not edit
  * @Date: 2019-12-30 08:31:45
- * @LastEditTime: 2020-06-15 14:55:07
+ * @LastEditTime: 2020-06-15 19:08:43
  * @LastEditors: 秦真
  * @Description: 
  * @FilePath: \qywx-robot\src\schedule.js
@@ -108,25 +108,6 @@ schedule4.second = 0;
 schedule4.executeMethod = async () => {
   const result = await analyseDeveloperBug(new Date(), bugUrlGXB3);
   const noticeList = [robotKeyForGXB];
-  const markdown = formatMarkdown(result);
-  if (markdown) {
-    noticeList.forEach(robotKey => {
-      sendMarkdownMsg(robotKey, markdown);
-    });
-  } else {
-    console.log(`${result.title}没有bug了`);
-  }
-};
-
-// 申能
-const schedule5 = new Schedule.RecurrenceRule();
-schedule5.dayOfWeek = [0, new Schedule.Range(1, 5)];
-schedule5.hour = [9, 13, 18];
-schedule5.minute = 10;
-schedule5.second = 0;
-schedule5.executeMethod = async () => {
-  const result = await analyseDeveloperBug(new Date(), bugUrlSN);
-  const noticeList = [robotKeyForSN];
   const markdown = formatMarkdown(result);
   if (markdown) {
     noticeList.forEach(robotKey => {
