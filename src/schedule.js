@@ -1,7 +1,7 @@
 /*
  * @Author: Do not edit
  * @Date: 2019-12-30 08:31:45
- * @LastEditTime: 2020-06-15 19:08:43
+ * @LastEditTime: 2020-06-16 09:22:18
  * @LastEditors: 秦真
  * @Description: 
  * @FilePath: \qywx-robot\src\schedule.js
@@ -193,7 +193,7 @@ schedule102.executeMethod = async () => {
 };
 
 
-const scheduleList = [schedule1, schedule2, schedule3, schedule4, schedule5, schedule6, schedule101, schedule6, schedule102];
+const scheduleList = [schedule1, schedule2, schedule3, schedule4, schedule5, schedule6, schedule101, schedule102];
 
 
 scheduleList.forEach((item, index) => {
