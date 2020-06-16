@@ -1,7 +1,7 @@
 /*
  * @Author: Do not edit
  * @Date: 2019-12-30 08:31:45
- * @LastEditTime: 2020-06-16 09:22:18
+ * @LastEditTime: 2020-06-16 18:12:03
  * @LastEditors: 秦真
  * @Description: 
  * @FilePath: \qywx-robot\src\schedule.js
@@ -137,11 +137,11 @@ schedule5.executeMethod = async () => {
   }
 };
 
-// 砺剑行动
+// 砺剑行动开发人员bug
 const schedule6 = new Schedule.RecurrenceRule();
 schedule6.dayOfWeek = [0, new Schedule.Range(1, 5)];
-schedule6.hour = [9, 18];
-schedule6.minute = 20;
+schedule6.hour = [12, 18, 21];
+schedule6.minute = 0;
 schedule6.second = 0;
 schedule6.executeMethod = async () => {
   const result = await analyseDeveloperBug(new Date(), bugUrlLJXD);
@@ -156,28 +156,31 @@ schedule6.executeMethod = async () => {
   }
 };
 
-const schedule101 = new Schedule.RecurrenceRule();
-schedule101.dayOfWeek = [0, new Schedule.Range(1, 5)];
-schedule101.hour = [21];
-schedule101.minute = 0;
-schedule101.second = 0;
-schedule101.executeMethod = async () => {
-  const projectId = '116';
-  const today = new Date();
-  const result = await analyseTesterBug(today, bugUrl);
-  await writeBugReport(projectId, today, result);
-  const imageBuffer = await screenshotTesterReport(projectId, today);
-  const noticeList = [robotKeyForTeam2];
-  noticeList.forEach(robotKey => {
-    sendMarkdownMsg(robotKey, `[点我查看历史记录](http://192.168.0.234:3000/output/report/${projectId}) <font color="comment">(只支持研发中心内网查看哦)</font>`);
-    sendImageMsg(robotKey, imageBuffer.toString('base64'), md5(imageBuffer));
-  });
-};
+// 产品-报账2.0-5.15版本（2020）测试提交bug情况
+// const schedule101 = new Schedule.RecurrenceRule();
+// schedule101.dayOfWeek = [0, new Schedule.Range(1, 5)];
+// schedule101.hour = [21];
+// schedule101.minute = 0;
+// schedule101.second = 0;
+// schedule101.executeMethod = async () => {
+//   const projectId = '116';
+//   const today = new Date();
+//   const result = await analyseTesterBug(today, bugUrl);
+//   await writeBugReport(projectId, today, result);
+//   const imageBuffer = await screenshotTesterReport(projectId, today);
+//   const noticeList = [robotKeyForTeam];
+//   noticeList.forEach(robotKey => {
+//     sendMarkdownMsg(robotKey, `[点我查看历史记录](http://192.168.0.234:3000/output/report/${projectId}) <font color="comment">(只支持研发中心内网查看哦)</font>`);
+//     sendImageMsg(robotKey, imageBuffer.toString('base64'), md5(imageBuffer));
+//   });
+// };
 
+
+// 砺剑行动 测试提交bug情况
 const schedule102 = new Schedule.RecurrenceRule();
 schedule102.dayOfWeek = [0, new Schedule.Range(1, 5)];
-schedule102.hour = [20];
-schedule102.minute = 30;
+schedule102.hour = [21];
+schedule102.minute = 1;
 schedule102.second = 0;
 schedule102.executeMethod = async () => {
   const projectId = '120';
@@ -193,7 +196,7 @@ schedule102.executeMethod = async () => {
 };
 
 
-const scheduleList = [schedule1, schedule2, schedule3, schedule4, schedule5, schedule6, schedule101, schedule102];
+const scheduleList = [schedule1, schedule2, schedule3, schedule4, schedule5, schedule6, /*schedule101,*/ schedule102];
 
 
 scheduleList.forEach((item, index) => {
