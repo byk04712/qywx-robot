@@ -1,7 +1,7 @@
 /*
  * @Author: Do not edit
  * @Date: 2020-05-22 10:45:24
- * @LastEditTime: 2020-06-18 19:43:53
+ * @LastEditTime: 2020-06-18 19:45:21
  * @LastEditors: 秦真
  * @Description: 
  * @FilePath: \qywx-robot\src\zentao.js
@@ -115,7 +115,7 @@ module.exports = (() => {
     }
   ) {
     await delay(1000);
-    console.log(`条件筛选开始`);
+    console.log('\t条件筛选开始');
     const field1 = await page.$(`#${fieldId}_chosen`);
     await field1.click();
     await delay(500);
@@ -136,7 +136,7 @@ module.exports = (() => {
       value1 = await page.$(`#${valueId}`);
       await value1.type(valueValue);
     }
-    console.log('条件筛选结束');
+    console.log('\t条件筛选结束');
   }
 
   /**
