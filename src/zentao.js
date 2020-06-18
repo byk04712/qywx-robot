@@ -1,7 +1,7 @@
 /*
  * @Author: Do not edit
  * @Date: 2020-05-22 10:45:24
- * @LastEditTime: 2020-06-15 14:42:53
+ * @LastEditTime: 2020-06-18 19:43:53
  * @LastEditors: 秦真
  * @Description: 
  * @FilePath: \qywx-robot\src\zentao.js
@@ -159,7 +159,7 @@ module.exports = (() => {
       const submit = await page.$('#submit');
       await submit.click();
       console.log('点击搜索按钮')
-      await delay(3000);
+      await delay(6000);
       // 获取内容区域
       const bugList = await page.$('#bugList tbody')
       if (bugList) {
