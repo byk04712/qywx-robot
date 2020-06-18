@@ -1,7 +1,7 @@
 /*
  * @Author: Do not edit
  * @Date: 2020-05-22 10:45:45
- * @LastEditTime: 2020-06-15 14:36:02
+ * @LastEditTime: 2020-06-18 19:48:40
  * @LastEditors: 秦真
  * @Description: 
  * @FilePath: \qywx-robot\src\index.test.js
@@ -13,8 +13,9 @@ const {
   robotKeyForTeam2,
   robotKeyForTest,
   robotKeyForTestAll,
-  bugUrl
-} = require('../robot/config');
+  bugUrl,
+  bugUrlLJXD
+} = require('./config');
 const {
   sendTextMsg,
   sendMarkdownMsg,
@@ -25,24 +26,31 @@ const {
   formatMarkdown,
   writeBugReport
 } = require('./formatMsg');
-const zentao = require('./zentao');
+const { analyseDeveloperBug } = require('./zentao');
 const cronParser = require('cron-parser');
+const Schedule = require('node-schedule')
 
 const date = new Date();
 
-const dir = path.
+const schedule6 = new Schedule.RecurrenceRule();
+schedule6.dayOfWeek = [0, new Schedule.Range(1, 5)];
+// schedule6.hour = [12, 18, 21];
+schedule6.minute = 49;
+schedule6.second = 0;
+schedule6.executeMethod = async () => {
+  const result = await analyseDeveloperBug(new Date(), bugUrlLJXD);
+  const noticeList = [robotKeyForTeam];
+  const markdown = formatMarkdown(result);
+  if (markdown) {
+    noticeList.forEach(robotKey => {
+      sendMarkdownMsg(robotKey, markdown);
+    });
+  } else {
+    console.log(`${result.title}没有bug了`);
+  }
+};
 
-try {
-  var interval = cronParser.parseExpression('0 30 8,12,17 * * *');
-
-  console.log('Date: ', interval.next().toString()); // Sat Dec 29 2012 00:42:00 GMT+0200 (EET)
-  console.log('Date: ', interval.next().toString()); // Sat Dec 29 2012 00:44:00 GMT+0200 (EET)
-
-  console.log('Date: ', interval.prev().toString()); // Sat Dec 29 2012 00:42:00 GMT+0200 (EET)
-  console.log('Date: ', interval.prev().toString()); // Sat Dec 29 2012 00:40:00 GMT+0200 (EET)
-} catch (err) {
-  console.log('Error: ' + err.message);
-}
+schedule6.executeMethod();
 
 
 // sendMarkdownMsg(robotKeyForTest, `[点我查看网页版](http://192.168.0.234:7001/report/20200522) <font color="comment">(只支持公司内网查看哦)</font>`);
