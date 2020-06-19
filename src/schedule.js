@@ -1,7 +1,7 @@
 /*
  * @Author: Do not edit
  * @Date: 2019-12-30 08:31:45
- * @LastEditTime: 2020-06-19 13:50:36
+ * @LastEditTime: 2020-06-19 18:02:30
  * @LastEditors: 秦真
  * @Description: 
  * @FilePath: \qywx-robot\src\schedule.js
@@ -145,7 +145,7 @@ schedule6.minute = 0;
 schedule6.second = 0;
 schedule6.executeMethod = async () => {
   const result = await analyseDeveloperBug(new Date(), bugUrlLJXD);
-  const noticeList = [robotKeyForTeam];
+  const noticeList = [robotKeyForTeam, robotKeyForTeam2];
   const markdown = formatMarkdown(result);
   if (markdown) {
     noticeList.forEach(robotKey => {
@@ -188,7 +188,7 @@ schedule102.executeMethod = async () => {
   const result = await analyseTesterBug(today, bugUrlLJXD);
   await writeBugReport(projectId, today, result);
   const imageBuffer = await screenshotTesterReport(projectId, today);
-  const noticeList = [robotKeyForTeam, robotKeyForTeam2];
+  const noticeList = [robotKeyForTeam2];
   noticeList.forEach(robotKey => {
     sendMarkdownMsg(robotKey, `[点我查看历史记录](http://192.168.0.234:3000/output/report/${projectId}) <font color="comment">(只支持研发中心内网查看哦)</font>`);
     sendImageMsg(robotKey, imageBuffer.toString('base64'), md5(imageBuffer));
