@@ -1,10 +1,10 @@
 /*
  * @Author: Do not edit
  * @Date: 2020-05-22 10:45:45
- * @LastEditTime: 2020-06-18 19:48:40
+ * @LastEditTime: 2020-06-28 21:48:47
  * @LastEditors: 秦真
  * @Description: 
- * @FilePath: \qywx-robot\src\index.test.js
+ * @FilePath: /qywx-robot/src/index.test.js
  */
 const md5 = require('md5');
 const fs = require('fs');

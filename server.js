@@ -1,12 +1,12 @@
 /*
  * @Author: Do not edit
  * @Date: 2020-06-09 14:04:15
- * @LastEditTime: 2020-06-09 19:05:45
+ * @LastEditTime: 2020-06-28 21:49:30
  * @Description: 
  * 使用nodejs把当前电脑文件夹目录当作web服务器来访问
  * - 如果是文件，则显示文件内容
  * - 如果是文件夹，则列出当前文件夹目录列表
- * @FilePath: \qywx-robot\server.js
+ * @FilePath: /qywx-robot/server.js
  */
 var http = require('http');
 var fs = require('fs');
