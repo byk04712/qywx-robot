@@ -1,12 +1,12 @@
 /*
  * @Author: Do not edit
  * @Date: 2020-05-18 17:00:57
- * @LastEditTime: 2020-06-15 13:48:12
+ * @LastEditTime: 2020-06-28 08:52:26
  * @LastEditors: 秦真
  * @Description: 禅道配置
  * @FilePath: \qywx-robot\src\config.js
  */
-const baseUrl = 'http://113.108.117.211:19979/zentao/';
+const baseUrl = 'http://zentao.csztessc.com.cn:19979/zentao/';
 
 module.exports = {
   baseUrl,
