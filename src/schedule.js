@@ -1,7 +1,7 @@
 /*
  * @Author: Do not edit
  * @Date: 2019-12-30 08:31:45
- * @LastEditTime: 2020-06-19 18:02:30
+ * @LastEditTime: 2020-06-29 10:21:25
  * @LastEditors: 秦真
  * @Description: 
  * @FilePath: \qywx-robot\src\schedule.js
@@ -36,9 +36,6 @@ const {
   screenshotTesterReport,
   analyseDeveloperBug,
 } = require('./zentao');
-const {
-  dateFormat
-} = require('./utils');
 
 console.log('正在运行定时任务中...')
 

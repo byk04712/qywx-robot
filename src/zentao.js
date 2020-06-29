@@ -1,7 +1,7 @@
 /*
  * @Author: Do not edit
  * @Date: 2020-05-22 10:45:24
- * @LastEditTime: 2020-06-18 19:45:21
+ * @LastEditTime: 2020-06-29 09:32:11
  * @LastEditors: 秦真
  * @Description: 
  * @FilePath: \qywx-robot\src\zentao.js
@@ -24,6 +24,7 @@ const {
 module.exports = (() => {
   let browser = null;
   const platform = os.platform();
+  const isLinux = platform === 'linux'
   console.log(`当前系统是：${platform}`);
 
   async function launchBrowser() {
@@ -35,20 +36,20 @@ module.exports = (() => {
         height: 768,
       },
       // devtools: true, // 是否是否为每个选项卡自动打开 DevTools 面板，如果这个选项是 true 的话, headless 选项将被设置为 false
-      headless: platform === 'linux', // 是否打开无头模式
+      headless: isLinux, // 是否打开无头模式
       slowMo: 20, // 操作间隔时间
       dumpio: true, // 是否将浏览器进程标准输出和标准错误输入到 process.stdout 和 process.stderr 中
     };
     // 如果在 linux 系统，linux上需安装 google-chrome 浏览器
-    if (platform === 'linux') {
+    if (isLinux) {
       defaultOptions.executablePath = path.resolve(__dirname, '../chrome-linux/chrome');
-      defaultOptions.args = ['--no-sandbox', '--disable-setuid-sandbox'];
+      defaultOptions.args = ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu'];
     } else {
       defaultOptions.args = ['--disable-gpu', '--no-sandbox', '--disable-dev-shm-usage'];
     }
     const browser = await puppeteer.launch(defaultOptions);
 
-    console.log(`Started Puppeteer with pid ${browser.process().pid}`);
+    console.log(`启动了 Puppeteer ，进程ID是: ${browser.process().pid}`);
 
     browser.on('disconnected', launchBrowser);
 
