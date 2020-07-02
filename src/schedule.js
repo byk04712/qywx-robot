@@ -1,7 +1,7 @@
 /*
  * @Author: Do not edit
  * @Date: 2019-12-30 08:31:45
- * @LastEditTime: 2020-06-29 10:21:25
+ * @LastEditTime: 2020-07-02 17:30:06
  * @LastEditors: 秦真
  * @Description: 
  * @FilePath: \qywx-robot\src\schedule.js
@@ -10,6 +10,7 @@ const Schedule = require('node-schedule')
 const md5 = require('md5');
 const {
   bugUrl,
+  bugUrlGXB1,
   bugUrlGXB3,
   bugUrl630,
   bugUrlSN,
@@ -86,6 +87,25 @@ schedule3.second = 0;
 schedule3.executeMethod = async () => {
   const result = await analyseDeveloperBug(new Date(), bugUrlGSXT);
   const noticeList = [robotKeyForTeam];
+  const markdown = formatMarkdown(result);
+  if (markdown) {
+    noticeList.forEach(robotKey => {
+      sendMarkdownMsg(robotKey, markdown);
+    });
+  } else {
+    console.log(`${result.title}没有bug了`);
+  }
+};
+
+// 工信部630
+const schedule4_1 = new Schedule.RecurrenceRule();
+schedule4_1.dayOfWeek = [0, new Schedule.Range(1, 5)];
+schedule4_1.hour = [8, 12, 17];
+schedule4_1.minute = 35;
+schedule4_1.second = 0;
+schedule4_1.executeMethod = async () => {
+  const result = await analyseDeveloperBug(new Date(), bugUrlGXB1);
+  const noticeList = [robotKeyForGXB];
   const markdown = formatMarkdown(result);
   if (markdown) {
     noticeList.forEach(robotKey => {
@@ -193,7 +213,7 @@ schedule102.executeMethod = async () => {
 };
 
 
-const scheduleList = [schedule1, schedule2, schedule3, schedule4, schedule5, schedule6, /*schedule101,*/ schedule102];
+const scheduleList = [schedule1, schedule2, schedule3, schedule4, schedule4_1, schedule5, schedule6, /*schedule101,*/ schedule102];
 
 
 scheduleList.forEach((item, index) => {
