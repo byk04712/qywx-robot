@@ -1,7 +1,7 @@
 /*
  * @Author: Do not edit
  * @Date: 2020-05-18 17:00:57
- * @LastEditTime: 2020-06-30 09:21:29
+ * @LastEditTime: 2020-07-06 17:35:59
  * @LastEditors: 秦真
  * @Description: 禅道配置
  * @FilePath: \qywx-robot\src\config.js
@@ -31,6 +31,8 @@ module.exports = {
   bugUrlSN: `${baseUrl}project-bug-122.html`,
   // 中兴新云，产品-工时系统2020
   bugUrlGSXT: `${baseUrl}project-bug-123.html`,
+  // 中兴新云，产品-采购商城
+  bugUrlMALL: `${baseUrl}project-bug-127.html`,
   // 中兴新云，产品2.0组
   robotKeyForTeam2: '3cf4d463-996c-4e8d-8bda-3f6ecb152954',
   // 中兴新云，研发中心-产品研发团队

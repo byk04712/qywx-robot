@@ -1,7 +1,7 @@
 /*
  * @Author: Do not edit
  * @Date: 2019-12-30 08:31:45
- * @LastEditTime: 2020-07-02 17:30:06
+ * @LastEditTime: 2020-07-06 17:37:21
  * @LastEditors: 秦真
  * @Description: 
  * @FilePath: \qywx-robot\src\schedule.js
@@ -16,6 +16,7 @@ const {
   bugUrlSN,
   bugUrlGSXT,
   bugUrlLJXD,
+  bugUrlMALL,
   robotKeyForTeam2,
   robotKeyForTeam,
   robotKeyForGXB,
@@ -78,14 +79,14 @@ schedule2.executeMethod = async () => {
   }
 };
 
-// 产品-工时系统2020
+// 产品-采购商城
 const schedule3 = new Schedule.RecurrenceRule();
 schedule3.dayOfWeek = [0, new Schedule.Range(1, 5)];
 schedule3.hour = [8, 12, 17];
 schedule3.minute = 50;
 schedule3.second = 0;
 schedule3.executeMethod = async () => {
-  const result = await analyseDeveloperBug(new Date(), bugUrlGSXT);
+  const result = await analyseDeveloperBug(new Date(), bugUrlMALL);
   const noticeList = [robotKeyForTeam];
   const markdown = formatMarkdown(result);
   if (markdown) {
