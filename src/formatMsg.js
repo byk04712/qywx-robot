@@ -1,7 +1,7 @@
 /*
  * @Author: Do not edit
  * @Date: 2020-05-19 10:47:22
- * @LastEditTime: 2020-06-15 14:35:46
+ * @LastEditTime: 2020-07-07 08:59:40
  * @LastEditors: 秦真
  * @Description: 格式话展示消息内容
  * @FilePath: \qywx-robot\src\formatMsg.js
@@ -117,6 +117,7 @@ function formatMarkdown(source) {
       waiting,
       resolved
     }) => {
+      name = name || '--';
       const waitingStr = waiting ? `${' '.repeat((3 - String(waiting).length) * 2)}**${waiting}**个` : '    -    ';
       const resolvedStr = resolved ? `${' '.repeat((3 - String(resolved).length) * 2)}**${resolved}**个` : '    -    ';
       return `\n>${name.padEnd(14 - name.length * 2)}${waitingStr}     ${resolvedStr}`;
