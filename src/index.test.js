@@ -1,10 +1,10 @@
 /*
  * @Author: Do not edit
  * @Date: 2020-05-22 10:45:45
- * @LastEditTime: 2020-06-28 21:48:47
+ * @LastEditTime: 2020-07-20 10:20:25
  * @LastEditors: 秦真
  * @Description: 
- * @FilePath: /qywx-robot/src/index.test.js
+ * @FilePath: \qywx-robot\src\index.test.js
  */
 const md5 = require('md5');
 const fs = require('fs');
@@ -38,15 +38,21 @@ schedule6.dayOfWeek = [0, new Schedule.Range(1, 5)];
 schedule6.minute = 49;
 schedule6.second = 0;
 schedule6.executeMethod = async () => {
-  const result = await analyseDeveloperBug(new Date(), bugUrlLJXD);
-  const noticeList = [robotKeyForTeam];
-  const markdown = formatMarkdown(result);
-  if (markdown) {
-    noticeList.forEach(robotKey => {
-      sendMarkdownMsg(robotKey, markdown);
-    });
-  } else {
-    console.log(`${result.title}没有bug了`);
+  try {
+    console.log('片段1')
+    const result = await analyseDeveloperBug(new Date(), bugUrlLJXD);
+    console.log('片段2')
+    const noticeList = [robotKeyForTestAll];
+    const markdown = formatMarkdown(result);
+    if (markdown) {
+      noticeList.forEach(robotKey => {
+        sendMarkdownMsg(robotKey, markdown);
+      });
+    } else {
+      console.log(`${result.title}没有bug了`);
+    }
+  } catch (e) {
+    console.log('异常 ', e)
   }
 };
 

@@ -1,7 +1,7 @@
 /*
  * @Author: Do not edit
  * @Date: 2019-12-30 08:31:45
- * @LastEditTime: 2020-07-06 17:37:21
+ * @LastEditTime: 2020-07-20 19:00:20
  * @LastEditors: 秦真
  * @Description: 
  * @FilePath: \qywx-robot\src\schedule.js
@@ -25,6 +25,7 @@ const {
   robotKeyForTest,
   robotKeyForTestAll,
 } = require('./config');
+
 const {
   sendImageMsg,
   sendMarkdownMsg,
