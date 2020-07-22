@@ -189,7 +189,7 @@ schedule6.executeMethod = async () => {
 //   const imageBuffer = await screenshotTesterReport(projectId, today);
 //   const noticeList = [robotKeyForTeam];
 //   noticeList.forEach(robotKey => {
-//     sendMarkdownMsg(robotKey, `[点我查看历史记录](http://192.168.0.234:3000/output/report/${projectId}) <font color="comment">(只支持研发中心内网查看哦)</font>`);
+//     sendMarkdownMsg(robotKey, `[点我查看历史记录](http://192.168.0.133:3000/output/report/${projectId}) <font color="comment">(只支持研发中心内网查看哦)</font>`);
 //     sendImageMsg(robotKey, imageBuffer.toString('base64'), md5(imageBuffer));
 //   });
 // };
@@ -209,7 +209,7 @@ schedule102.executeMethod = async () => {
   const imageBuffer = await screenshotTesterReport(projectId, today);
   const noticeList = [robotKeyForTeam2];
   noticeList.forEach(robotKey => {
-    sendMarkdownMsg(robotKey, `[点我查看历史记录](http://192.168.0.234:3000/output/report/${projectId}) <font color="comment">(只支持研发中心内网查看哦)</font>`);
+    sendMarkdownMsg(robotKey, `[点我查看历史记录](http://192.168.0.133:3000/output/report/${projectId}) <font color="comment">(只支持研发中心内网查看哦)</font>`);
     sendImageMsg(robotKey, imageBuffer.toString('base64'), md5(imageBuffer));
   });
 };

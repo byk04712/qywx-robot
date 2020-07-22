@@ -1,7 +1,7 @@
 /*
  * @Author: Do not edit
  * @Date: 2020-05-22 10:45:45
- * @LastEditTime: 2020-07-20 10:20:25
+ * @LastEditTime: 2020-07-22 20:20:31
  * @LastEditors: 秦真
  * @Description: 
  * @FilePath: \qywx-robot\src\index.test.js
@@ -59,7 +59,7 @@ schedule6.executeMethod = async () => {
 schedule6.executeMethod();
 
 
-// sendMarkdownMsg(robotKeyForTest, `[点我查看网页版](http://192.168.0.234:7001/report/20200522) <font color="comment">(只支持公司内网查看哦)</font>`);
+// sendMarkdownMsg(robotKeyForTest, `[点我查看网页版](http://192.168.0.133:7001/report/20200522) <font color="comment">(只支持公司内网查看哦)</font>`);
 
 
 // zentao.analyseDeveloperBug(date, bugUrl)
