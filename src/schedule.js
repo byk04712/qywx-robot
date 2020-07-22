@@ -1,7 +1,7 @@
 /*
  * @Author: Do not edit
  * @Date: 2019-12-30 08:31:45
- * @LastEditTime: 2020-07-20 19:00:20
+ * @LastEditTime: 2020-07-22 08:51:22
  * @LastEditors: 秦真
  * @Description: 
  * @FilePath: \qywx-robot\src\schedule.js
@@ -198,7 +198,7 @@ schedule6.executeMethod = async () => {
 // 砺剑行动 测试提交bug情况
 const schedule102 = new Schedule.RecurrenceRule();
 schedule102.dayOfWeek = [0, new Schedule.Range(1, 5)];
-schedule102.hour = [21];
+schedule102.hour = 21;
 schedule102.minute = 3;
 schedule102.second = 0;
 schedule102.executeMethod = async () => {
