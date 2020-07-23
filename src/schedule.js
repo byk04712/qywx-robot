@@ -1,7 +1,7 @@
 /*
  * @Author: Do not edit
  * @Date: 2019-12-30 08:31:45
- * @LastEditTime: 2020-07-22 08:51:22
+ * @LastEditTime: 2020-07-23 13:33:10
  * @LastEditors: 秦真
  * @Description: 
  * @FilePath: \qywx-robot\src\schedule.js
@@ -17,6 +17,7 @@ const {
   bugUrlGSXT,
   bugUrlLJXD,
   bugUrlMALL,
+  bugUrlLanguage,
   robotKeyForTeam2,
   robotKeyForTeam,
   robotKeyForGXB,
@@ -175,6 +176,25 @@ schedule6.executeMethod = async () => {
   }
 };
 
+// 产品多语言
+const schedule7 = new Schedule.RecurrenceRule();
+schedule7.dayOfWeek = [0, new Schedule.Range(1, 5)];
+schedule7.hour = [8, 12, 17];
+schedule7.minute = 35;
+schedule7.second = 0;
+schedule7.executeMethod = async () => {
+  const result = await analyseDeveloperBug(new Date(), bugUrlLanguage);
+  const noticeList = [robotKeyForTeam2];
+  const markdown = formatMarkdown(result);
+  if (markdown) {
+    noticeList.forEach(robotKey => {
+      sendMarkdownMsg(robotKey, markdown);
+    });
+  } else {
+    console.log(`${result.title}没有bug了`);
+  }
+};
+
 // 产品-报账2.0-5.15版本（2020）测试提交bug情况
 // const schedule101 = new Schedule.RecurrenceRule();
 // schedule101.dayOfWeek = [0, new Schedule.Range(1, 5)];
@@ -215,7 +235,7 @@ schedule102.executeMethod = async () => {
 };
 
 
-const scheduleList = [schedule1, schedule2, schedule3, schedule4, schedule4_1, schedule5, schedule6, /*schedule101,*/ schedule102];
+const scheduleList = [schedule1, schedule2, schedule3, schedule4, schedule4_1, schedule5, schedule6, schedule7, /*schedule101,*/ schedule102];
 
 
 scheduleList.forEach((item, index) => {
