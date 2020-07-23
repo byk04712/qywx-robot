@@ -1,7 +1,7 @@
 /*
  * @Author: Do not edit
  * @Date: 2019-12-30 08:31:45
- * @LastEditTime: 2020-07-23 13:33:10
+ * @LastEditTime: 2020-07-23 17:53:08
  * @LastEditors: 秦真
  * @Description: 
  * @FilePath: \qywx-robot\src\schedule.js
@@ -9,7 +9,6 @@
 const Schedule = require('node-schedule')
 const md5 = require('md5');
 const {
-  bugUrl,
   bugUrlGXB1,
   bugUrlGXB3,
   bugUrl630,
@@ -44,23 +43,23 @@ const {
 console.log('正在运行定时任务中...')
 
 // 产品报账2.0.5-15版本
-const schedule1 = new Schedule.RecurrenceRule();
-schedule1.dayOfWeek = [0, new Schedule.Range(1, 5)];
-schedule1.hour = [8, 12, 17];
-schedule1.minute = 30;
-schedule1.second = 0;
-schedule1.executeMethod = async () => {
-  const result = await analyseDeveloperBug(new Date(), bugUrl);
-  const noticeList = [robotKeyForTeam];
-  const markdown = formatMarkdown(result);
-  if (markdown) {
-    noticeList.forEach(robotKey => {
-      sendMarkdownMsg(robotKey, markdown);
-    });
-  } else {
-    console.log(`${result.title}没有bug了`);
-  }
-};
+// const schedule1 = new Schedule.RecurrenceRule();
+// schedule1.dayOfWeek = [0, new Schedule.Range(1, 5)];
+// schedule1.hour = [8, 12, 17];
+// schedule1.minute = 30;
+// schedule1.second = 0;
+// schedule1.executeMethod = async () => {
+//   const result = await analyseDeveloperBug(new Date(), bugUrl);
+//   const noticeList = [robotKeyForTeam];
+//   const markdown = formatMarkdown(result);
+//   if (markdown) {
+//     noticeList.forEach(robotKey => {
+//       sendMarkdownMsg(robotKey, markdown);
+//     });
+//   } else {
+//     console.log(`${result.title}没有bug了`);
+//   }
+// };
 
 // 产品报账630版
 const schedule2 = new Schedule.RecurrenceRule();
@@ -235,7 +234,7 @@ schedule102.executeMethod = async () => {
 };
 
 
-const scheduleList = [schedule1, schedule2, schedule3, schedule4, schedule4_1, schedule5, schedule6, schedule7, /*schedule101,*/ schedule102];
+const scheduleList = [schedule2, schedule3, schedule4, schedule4_1, schedule5, schedule6, schedule7, /*schedule101,*/ schedule102];
 
 
 scheduleList.forEach((item, index) => {
