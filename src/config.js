@@ -1,19 +1,19 @@
 /*
  * @Author: Do not edit
  * @Date: 2020-05-18 17:00:57
- * @LastEditTime: 2020-11-17 08:49:59
+ * @LastEditTime: 2020-11-17 15:27:53
  * @LastEditors: 秦真
  * @Description: 禅道配置
  * @FilePath: \qywx-robot\src\config.js
  */
 const baseUrl = 'http://zentao.csztessc.com.cn:19979/zentao/'; // 外网
-// const baseUrl = 'http://192.168.0.10/zentao/'; // 内网
+const baseUrlLocal = 'http://192.168.0.10/zentao/'; // 内网
 
 module.exports = {
   baseUrl,
   username: 'qinzhen',
   password: 'qinzhen123456',
-  loginUrl: `${baseUrl}user-login.html`,
+  loginUrl: `${baseUrlLocal}user-login.html`,
   myBugUrl: `${baseUrl}my-bug.html`,
   // 中兴新云，GXB项目-二期630
   bugUrlGXB1: `${baseUrl}project-bug-125.html`,
