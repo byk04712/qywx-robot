@@ -1,7 +1,7 @@
 /*
  * @Author: Do not edit
  * @Date: 2019-12-30 08:31:45
- * @LastEditTime: 2020-07-23 17:53:08
+ * @LastEditTime: 2020-11-18 13:48:06
  * @LastEditors: 秦真
  * @Description: 
  * @FilePath: \qywx-robot\src\schedule.js
@@ -178,7 +178,7 @@ schedule6.executeMethod = async () => {
 // 产品多语言
 const schedule7 = new Schedule.RecurrenceRule();
 schedule7.dayOfWeek = [0, new Schedule.Range(1, 5)];
-schedule7.hour = [8, 12, 17];
+schedule7.hour = [8, 13, 17];
 schedule7.minute = 35;
 schedule7.second = 0;
 schedule7.executeMethod = async () => {

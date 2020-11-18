@@ -1,7 +1,7 @@
 /*
  * @Author: Do not edit
  * @Date: 2020-05-19 10:47:22
- * @LastEditTime: 2020-07-07 08:59:40
+ * @LastEditTime: 2020-11-18 13:46:29
  * @LastEditors: 秦真
  * @Description: 格式话展示消息内容
  * @FilePath: \qywx-robot\src\formatMsg.js
@@ -12,6 +12,10 @@ const {
   dateFormat,
   countObj
 } = require('./utils');
+const {
+  baseUrl,
+  baseUrlLocal
+} = require('./config');
 
 /**
  * 转换
@@ -127,7 +131,7 @@ function formatMarkdown(source) {
     // <font color="info">你们的Bug清零了，请继续保持。</font>`;
     return '';
   }
-  return `当前[${source.title}](${source.bugUrl}) 还有待解决的Bug共计 <font color="warning">${total.waiting}</font> 个，今日已解决共计 <font color="info">${total.resolved}</font> 个，请以下同学及时[处理](${source.myBugUrl}) \n>姓名        待解决      已解决${items.join('')}`;
+  return `当前[${source.title}](${source.bugUrl.replace(baseUrlLocal, baseUrl)}) 还有待解决的Bug共计 <font color="warning">${total.waiting}</font> 个，今日已解决共计 <font color="info">${total.resolved}</font> 个，请以下同学及时[处理](${source.myBugUrl.replace(baseUrlLocal, baseUrl)}) \n>姓名        待解决      已解决${items.join('')}`;
 }
 
 /**
